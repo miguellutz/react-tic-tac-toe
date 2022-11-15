@@ -1,20 +1,44 @@
+import { toHaveFocus } from '@testing-library/jest-dom/dist/matchers';
 import React from 'react'
 import ReactDOM from 'react-dom/client';
 import './index.css';
 
 class Square extends React.Component {
+
   render() {
     return (
-      <button className="square">
-        {/* To Do */}
+      <button
+        className="square"
+        onClick={() => this.props.onClick()}
+      > {/* without () onClick function would fire every time component re-renders */}
+        {this.props.value}
       </button>
     );
   }
 }
 
 class Board extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      squares: Array(9).fill(null),
+    }
+  }
+
+  handleClick(i) {
+    const squares = this.state.squares.slice();
+    squares[i] = 'X';
+    this.setState({squares: squares});
+  }
+
   renderSquare(i) {
-    return <Square />;
+    return (
+      <Square
+        value={this.state.squares[i]}
+        onClick={() => this.handleClick(i)}
+     />
+    );
   }
 
   render() {
