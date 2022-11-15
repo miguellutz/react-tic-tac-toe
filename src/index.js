@@ -1,20 +1,18 @@
-import { toHaveFocus } from '@testing-library/jest-dom/dist/matchers';
 import React from 'react'
 import ReactDOM from 'react-dom/client';
 import './index.css';
 
-class Square extends React.Component {
+function Square(props) {
 
-  render() {
-    return (
-      <button
-        className="square"
-        onClick={() => this.props.onClick()}
-      > {/* without () onClick function would fire every time component re-renders */}
-        {this.props.value}
-      </button>
-    );
-  }
+  return (
+    <button
+      className="square"
+      // onClick={() => props.onClick()}
+      onClick = {props.onClick}
+    > {/* without () onClick function would fire every time component re-renders */}
+      {props.value}
+    </button>
+  );
 }
 
 class Board extends React.Component {
@@ -27,7 +25,7 @@ class Board extends React.Component {
   }
 
   handleClick(i) {
-    const squares = this.state.squares.slice();
+    const squares = this.state.squares.slice(); // avoids direct data mutation of the squares array to implement time travel feature later on
     squares[i] = 'X';
     this.setState({squares: squares});
   }
